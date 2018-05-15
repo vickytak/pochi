@@ -1,14 +1,67 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<!-- <ion-header>
+    <ion-navbar color="pagecolor" hideBackButton="true">       
+        <ion-title>
+           Level 1-1
+        </ion-title>
+    </ion-navbar>
+</ion-header> -->
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content padding color="pagecolor">
+
+  <div class="container">
+    <!-- <div class="result">Use {{quesType}} Numbers for {{matchNumber}}</div>  -->
+    <!-- <div class="timer">{{time.countDown | async}}</div> -->
+    <div class="header" (click)="showBanner()" >
+      <div class="level">{{dp.userData?.level}}-{{dp.userData?.subLevel}}</div>
+      <div class="score">{{dp.userData?.score}}</div>
+    </div>
+    <div class="question">
+      <div class="queAns">4</div>
+      <div class="subQue">2 Numbers</div>     
+    </div>
+    <!-- <div class="gamepad">
+      <div class="gamerow">
+        <div class="gamecol makeblack" (click)="onNumber1(gamenumber['0'])" [ngClass]="box1 ? 'selected' : '' ">{{gamenumber['0']}}</div>
+        <div class="gamecol makewhite" (click)="onNumber2(gamenumber['1'])" [ngClass]="box2 ? 'selected' : '' ">{{gamenumber['1']}}</div>
+        <div class="gamecol makeblack" (click)="onNumber3(gamenumber['2'])" [ngClass]="box3 ? 'selected' : '' ">{{gamenumber['2']}}</div>
+      </div>
+      <div class="gamerow">
+        <div class="gamecol makewhite" (click)="onNumber4(gamenumber['3'])" [ngClass]="box4 ? 'selected' : '' ">{{gamenumber['3']}}</div>
+        <div class="gamecol makeblack" (click)="onNumber5(gamenumber['4'])" [ngClass]="box5 ? 'selected' : '' ">{{gamenumber['4']}}</div>
+        <div class="gamecol makewhite" (click)="onNumber6(gamenumber['5'])" [ngClass]="box6 ? 'selected' : '' ">{{gamenumber['5']}}</div>
+      </div>
+      <div class="gamerow">
+        <div class="gamecol makeblack" (click)="onNumber7(gamenumber['6'])" [ngClass]="box7 ? 'selected' : '' ">{{gamenumber['6']}}</div>
+        <div class="gamecol makewhite" (click)="onNumber8(gamenumber['7'])" [ngClass]="box8 ? 'selected' : '' ">{{gamenumber['7']}}</div>
+        <div class="gamecol makeblack" (click)="onNumber9(gamenumber['8'])" [ngClass]="box9 ? 'selected' : '' ">{{gamenumber['8']}}</div>
+      </div>
+    </div> -->
+
+    <div class="gamepad">
+        <div class="gamerow">
+          <div class="gamecol makeblack" (click)="onGamePadTap('number','1',gamenumber['0'])" [ngClass]="box[1] ? 'selected' : '' ">{{gamenumber['0']}}</div>
+          <div class="gamecol makewhite" (click)="onGamePadTap('operand','2',gamenumber['1'])" [ngClass]="box[2] ? 'selected' : '' ">{{gamenumber['1']}}</div>
+          <div class="gamecol makeblack" (click)="onGamePadTap('number','3',gamenumber['2'])" [ngClass]="box[3] ? 'selected' : '' ">{{gamenumber['2']}}</div>
+        </div>
+        <div class="gamerow">
+          <div class="gamecol makewhite" (click)="onGamePadTap('operand','4',gamenumber['3'])" [ngClass]="box[4] ? 'selected' : '' ">{{gamenumber['3']}}</div>
+          <div class="gamecol makeblack" (click)="onGamePadTap('number','5',gamenumber['4'])" [ngClass]="box[5] ? 'selected' : '' ">{{gamenumber['4']}}</div>
+          <div class="gamecol makewhite" (click)="onGamePadTap('operand','6',gamenumber['5'])" [ngClass]="box[6] ? 'selected' : '' ">{{gamenumber['5']}}</div>
+        </div>
+        <div class="gamerow">
+          <div class="gamecol makeblack" (click)="onGamePadTap('number','7',gamenumber['6'])" [ngClass]="box[7] ? 'selected' : '' ">{{gamenumber['6']}}</div>
+          <div class="gamecol makewhite" (click)="onGamePadTap('operand','8',gamenumber['7'])" [ngClass]="box[8] ? 'selected' : '' ">{{gamenumber['7']}}</div>
+          <div class="gamecol makeblack" (click)="onGamePadTap('number','9',gamenumber['8'])" [ngClass]="box[9] ? 'selected' : '' ">{{gamenumber['8']}}</div>
+        </div>
+      </div>
+
+
+  </div>
+
+  <!-- <div class="parent">
+      <div class="child" *ngFor="let box of gamenumber;let idx = index"  [ngClass]="[idx % 2 == 0 ? 'even' : 'odd', idx == selected ? 'selected' : ''] " (click)="onboxTap(box, idx)" >{{box}}</div>      
+    </div> -->
+
+    <div *ngFor="let ab of quedata | async"> aa</div>
+
 </ion-content>
