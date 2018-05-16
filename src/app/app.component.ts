@@ -14,12 +14,12 @@ export class MyApp {
   rootPage:string;
  
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, smartAudio: SmartAudioProvider, public dp: DataProvider, public auth: AuthProvider) {
+  constructor(platform: Platform, statusBar: StatusBar, public splashScreen: SplashScreen, smartAudio: SmartAudioProvider, public dp: DataProvider, public auth: AuthProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
-      splashScreen.hide();
+      
       smartAudio.preload('tapbox', 'assets/audio/tap2.mp3'); 
       smartAudio.preload('levelup', 'assets/audio/levelup.mp3');
       smartAudio.preload('wrong', 'assets/audio/wrong.mp3');
@@ -33,8 +33,8 @@ export class MyApp {
       
       let authState = this.auth.getauthenticated().subscribe(user=>{
         if(user){
-          this.dp.currentUser = user;
-          this.rootPage = 'HomePage';
+          this.dp.currentUser = user;       
+          this.getUserData();
         } else {
           this.rootPage = 'LoginPage';
         }
@@ -45,7 +45,24 @@ export class MyApp {
   }
 
   getUserData(){
-   
+    this.dp.getuserScore().then( res=>{
+       this.getUserQues(this.dp.userData.stage);
+       
+     }).catch(err => console.error(err));  
+  }
+
+  getUserQues(stage){
+    this.dp.getAllQue(stage).then((snapshotChanges) => {      
+      if(snapshotChanges.val() != null){
+       snapshotChanges.forEach( val =>{         
+         this.dp.queArray.push(val.val());
+       });
+       this.rootPage = 'HomePage';
+     }else{
+       alert('no more questions');
+     }},err =>{
+       console.log(err);
+     });
   }
 }
 

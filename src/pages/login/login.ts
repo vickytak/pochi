@@ -29,7 +29,21 @@ export class LoginPage {
     this.auth.login(this.user)
     .then(user=>{
       this.dp.currentUser = user;
-      this.navCtrl.setRoot('HomePage');
+      this.dp.getuserScore().then( res=>{
+        this.dp.getAllQue().then((snapshotChanges) => {      
+          if(snapshotChanges.val() != null){
+           snapshotChanges.forEach( val =>{         
+             this.dp.queArray.push(val.val());
+           });
+           this.navCtrl.setRoot('HomePage');
+         }else{
+           alert('no more questions');
+         }},err =>{
+           console.log(err);
+         });
+        
+      }).catch(err => console.error(err));  
+      //this.navCtrl.setRoot('HomePage');
     })
     .catch(err => alert(err.message));
   }

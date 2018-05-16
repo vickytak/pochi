@@ -11,8 +11,9 @@ import { Score } from '../../models/userscore.model';
 */
 @Injectable()
 export class DataProvider {
-  userData:Score =  { level: 1, subLevel: 1, score: 0, sublevelScore:0 };  
+  userData:Score =  { level: 1, subLevel: 1, score: 0, sublevelScore:0, stage:0 };  
   currentUser:any;
+  queArray:any = [];
 private userScoreRef = this.afDb.database.ref('/users/')
   constructor(private storage: Storage, private afDb : AngularFireDatabase) {
     
@@ -36,7 +37,9 @@ private userScoreRef = this.afDb.database.ref('/users/')
  getuserScore() {
    console.log(this.currentUser.uid);
   //  return this.afDb.list('/users/'+this.currentUser.uid+'/score/');
-  return this.afDb.database.ref('/users/'+this.currentUser.uid+'/score/');
+  return this.afDb.database.ref('/users/'+this.currentUser.uid+'/score/').once("value", snapshotChanges =>{
+    this.userData= snapshotChanges.val();    
+   });
  }
 
  adduserScore(score : Score){
@@ -49,10 +52,10 @@ private userScoreRef = this.afDb.database.ref('/users/')
  }
 
  createUserScore(uid){
-   console.log(uid);
+  let newScore= {level : 1, subLevel : 1, sublevelScore : 0, score : 0}
   return this.userScoreRef.child(uid)
    .child('/score/')
-   .set(this.userData);
+   .set(newScore);
  }
 
  getNewQuestion(){
@@ -62,7 +65,7 @@ private userScoreRef = this.afDb.database.ref('/users/')
 
  getAllQue(){
    console.log('hello');
-  return this.afDb.list('/questions');
+  return this.afDb.database.ref('/questions').orderByChild('stage').startAt(this.userData.stage).limitToFirst(5).once('value');
  }
 
 }

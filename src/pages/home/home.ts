@@ -20,9 +20,9 @@ export class HomePage {
   isFirst:boolean = true;
   box:any = [false,false, false, false, false, false, false, false, false, false];  
   operand:any = null;
-  quesType:number=2;
+  quesType:number;
   totalSelected:number = 0;
-  matchNumber:number = 4;
+  matchNumber:number;
   resultText:any;
   timer:any = 30;
   score:any = 0;
@@ -31,23 +31,39 @@ export class HomePage {
   forSublevelUp = 0;
   forLevelup=0;
   userData:any;
-  queArray:any = [];
+  queLength:number = 0;
+  //queArray:any = [];
 
 
   lastBoxSelected:any;
   constructor(public navCtrl: NavController, public time: TimerProvider, public smartAudio : SmartAudioProvider, public admob: AdMobFree,public dp: DataProvider) {
     //this.timer = time.countDown;    
     this.showBanner();   
-    dp.getuserScore().on("value", snapshotChanges =>{
-     this.dp.userData= snapshotChanges.val();    
-    });
+   
    //this.dp.getAllQue().once("value")
-   this.dp.getAllQue().valueChanges().subscribe(res=> {
-     res.forEach( val=>{      
-       this.queArray.push(val);
-     });
-     this.gamenumber = this.queArray[0].que;
-   });
+
+   //this.dp.getAllQue()
+
+  //  this.dp.getAllQue(2).then((snapshotChanges) => {
+  //   // console.log(snapshotChanges.val());
+  //    snapshotChanges.forEach( val =>{
+  //      console.log(val.val());
+  //    })
+  //  },err =>{
+  //    console.log(err);
+  //  });
+
+  //  this.dp.getAllQue().valueChanges().subscribe(res=> {
+  //    res.forEach( val=>{      
+  //      this.queArray.push(val);
+  //    });
+  //console.log(this.dp.queArray);
+     this.gamenumber = this.dp.queArray[0].que;
+     this.matchNumber = this.dp.queArray[0].ans;
+     this.quesType = this.dp.queArray[0].type;
+
+  //   console.log(this.gamenumber, this.matchNumber, this.quesType);
+  //  });
   
   
  // this.gamenumber = this.queArray[0].que;
@@ -83,7 +99,7 @@ export class HomePage {
 
  onGamePadTap(type, idx, val){
 
-  console.log(type, idx, val);
+ // console.log(type, idx, val);
   if( type == 'operand' && this.forOperand(idx, val) ){
     this.onBoxTap('tapbox');
     this.lastBoxSelected = idx;
@@ -136,11 +152,16 @@ checkResult(){
 }
 
 Levelup(){
-  //this.forSublevelUp +=1;
-  this.dp.userData.sublevelScore += 1;
-  console.log(this.dp.userData.sublevelScore);
-//  console.log(this.queArray[this.dp.userData.sublevelScore].que);
-  this.gamenumber = this.queArray[this.dp.userData.sublevelScore].que;
+  console.log(this.dp.queArray.length, this.queLength);
+  this.queLength += 1;
+  
+  
+  this.dp.userData.sublevelScore += 1;  
+  this.dp.userData.stage += 1;
+ 
+  
+ 
+
   if(this.dp.userData.sublevelScore > 9){
     this.dp.userData.subLevel += 1;
     this.dp.userData.sublevelScore = 0;
@@ -154,7 +175,40 @@ Levelup(){
     this.onBoxTap('levelup');
     this.launchInterstitial();
   } 
+  console.log(this.dp.userData.stage);
   this.dp.updateUserScore().update({score: this.dp.userData}) ;
+  //console.log(this.queLength);
+  if(this.dp.queArray.length <= this.queLength){
+  this.queLength = 0;
+  this.getNewQuestion();
+}else{
+  this.gamenumber = this.dp.queArray[this.queLength].que;
+  this.matchNumber = this.dp.queArray[this.queLength].ans;
+  this.quesType = this.dp.queArray[this.queLength].type;
+}  
+}
+getNewQuestion(){  
+   
+    this.dp.getAllQue().then((snapshotChanges) => {
+      console.log(snapshotChanges.val());
+      if(snapshotChanges.val() != null){
+      this.dp.queArray = [];
+       snapshotChanges.forEach( val =>{
+         //console.log(val.val());
+         
+         this.dp.queArray.push(val.val());
+       });
+       this.gamenumber = this.dp.queArray[this.queLength].que;
+       this.matchNumber = this.dp.queArray[this.queLength].ans;
+       this.quesType = this.dp.queArray[this.queLength].type;
+     
+     }else{
+       alert('no more questions');
+     }},err =>{
+       console.log(err);
+       alert('there is no more questions');
+     });
+  
 }
 
 
