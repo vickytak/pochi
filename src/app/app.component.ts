@@ -52,7 +52,7 @@ export class MyApp {
   }
 
   getUserQues(stage){
-    this.dp.getAllQue(stage).then((snapshotChanges) => {      
+    this.dp.getAllQue().then((snapshotChanges) => {      
       if(snapshotChanges.val() != null){
        snapshotChanges.forEach( val =>{         
          this.dp.queArray.push(val.val());
