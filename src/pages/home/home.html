@@ -11,8 +11,13 @@
   <div class="container">
     <!-- <div class="result">Use {{quesType}} Numbers for {{matchNumber}}</div>  -->
     <!-- <div class="timer">{{time.countDown | async}}</div> -->
-    <div class="header" (click)="showBanner()" >
+    <div class="header" >
       <div class="level">{{dp.userData?.level}}-{{dp.userData?.subLevel}}</div>
+      <ion-buttons>
+        <button ion-button (click)="onLogout()">
+          <ion-icon name="log-out"></ion-icon>
+        </button>
+      </ion-buttons>
       <div class="score">{{dp.userData?.score}}</div>
     </div>
     <div class="question">

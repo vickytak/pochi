@@ -21,6 +21,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { UtilityProvider } from '../providers/utility/utility';
+import {Facebook} from '@ionic-native/facebook';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { UtilityProvider } from '../providers/utility/utility';
     DataProvider,
     AuthProvider,
     UtilityProvider,
+    Facebook
     
   ]
 })

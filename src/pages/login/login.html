@@ -4,17 +4,11 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
-
-</ion-header>
 
 
-<ion-content padding>
-  <div id="recaptcha-container"></div>
+
+<ion-content  class="background-pic">
+  <!-- <div id="recaptcha-container"></div>
 
   <ion-item>
     <ion-label stacked>Email</ion-label>
@@ -31,4 +25,41 @@
   <button ion-button id="sign-in-button" (click)="signIn()">
     Sign In
   </button>
+
+  <button ion-button id="sign-in-button" (click)="register()">
+    Register
+  </button>
+
+  <button style="background-color: #415DAE;" ion-button id="sign-in-button" (click)="loginwithFacebook()">
+    Login With Facebook
+  </button> -->
+
+  <div class="logo">
+    <img src="./assets/imgs/pochi-logo.png">    
+  </div>
+  <div class="cup">
+      <img src="./assets/imgs/cup.png">
+  </div>
+
+  <div class="menu-base">
+    <div class="input-container">
+      <ion-item no-lines item-center class="login-input">        
+        <ion-input type="email" placeholder="email"></ion-input>
+      </ion-item>
+
+      <ion-item no-lines item-center class="login-input">        
+        <ion-input type="password" placeholder="password"></ion-input>
+      </ion-item>
+      <div class="signin">
+          <img src="./assets/imgs/signin.png">
+      </div>
+      <div class="fblogin">       
+      <img src="./assets/imgs/fb-login.png">
+      </div>
+    </div>
+     
+  </div>
+  <div class="register">
+      <img src="./assets/imgs/register.png">
+  </div>
 </ion-content>

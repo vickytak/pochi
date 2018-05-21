@@ -4,6 +4,7 @@ import { TimerProvider } from '../../providers/timer/timer';
 import { SmartAudioProvider } from '../../providers/smart-audio/smart-audio';
 import { AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig } from '@ionic-native/admob-free';
 import { DataProvider } from '../../providers/data/data';
+import { AuthProvider } from '../../providers/auth/auth';
 import { snapshotChanges } from 'angularfire2/database';
 
 @IonicPage()
@@ -36,7 +37,7 @@ export class HomePage {
 
 
   lastBoxSelected:any;
-  constructor(public navCtrl: NavController, public time: TimerProvider, public smartAudio : SmartAudioProvider, public admob: AdMobFree,public dp: DataProvider) {
+  constructor(public auth: AuthProvider,public navCtrl: NavController, public time: TimerProvider, public smartAudio : SmartAudioProvider, public admob: AdMobFree,public dp: DataProvider) {
     //this.timer = time.countDown;    
     this.showBanner();   
    
@@ -203,7 +204,7 @@ getNewQuestion(){
        this.quesType = this.dp.queArray[this.queLength].type;
      
      }else{
-       alert('no more questions');
+       this.navCtrl.setRoot('FinishPage');
      }},err =>{
        console.log(err);
        alert('there is no more questions');
@@ -298,6 +299,10 @@ launchInterstitial() {
       // success
   });
 
+}
+
+onLogout(){
+  this.auth.logout().then(()=>this.navCtrl.setRoot('LoginPage'));
 }
 
 }

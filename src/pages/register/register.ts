@@ -30,12 +30,10 @@ user: any = {email:'', password:''};
     this.auth.register(this.user)
     .then( user =>{
       console.log(user);
-      this.dp.createUserScore(user.uid).then( res=> {this.auth.logout(); this.navCtrl.setRoot('LoginPage')});         
-      //console.log(user);
-     // this.ut.loading.dismiss();
+      this.dp.currentUser = user;
+      this.dp.getuserScore().then( res=> {this.auth.logout(); this.navCtrl.setRoot('LoginPage')});    
     })
-    .catch(err=> {alert(err.message);this.ut.loading.dismiss();});
-    //this.ut.loading.dismiss();
+    .catch(err=> {alert(err.message);this.ut.loading.dismiss();});  
   }
 
   onLogout(){

@@ -11,6 +11,13 @@ $font-path: "../assets/fonts";
   font-weight: 400;
   src: url('../assets/fonts/polygon/poly.ttf');
 }
+
+@font-face {
+  font-family: 'digital';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../assets/fonts/digital/Digital_tech.otf');
+}
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/

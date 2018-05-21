@@ -29,7 +29,7 @@ export class LoginPage {
     this.auth.login(this.user)
     .then(user=>{
       this.dp.currentUser = user;
-      this.dp.getuserScore().then( res=>{
+      this.dp.getuserScore().then( res=>{       
         this.dp.getAllQue().then((snapshotChanges) => {      
           if(snapshotChanges.val() != null){
            snapshotChanges.forEach( val =>{         
@@ -37,7 +37,8 @@ export class LoginPage {
            });
            this.navCtrl.setRoot('HomePage');
          }else{
-           alert('no more questions');
+         //  alert('no more questions');
+         this.navCtrl.setRoot('FinishPage');
          }},err =>{
            console.log(err);
          });
@@ -46,6 +47,27 @@ export class LoginPage {
       //this.navCtrl.setRoot('HomePage');
     })
     .catch(err => alert(err.message));
+  }
+
+  register(){
+    this.navCtrl.push('RegisterPage');
+  }
+
+  loginwithFacebook(){
+   
+      this.auth.loginWithFacebook().subscribe( res => {
+     // console.log(res);
+     this.dp.getuserScore().then(()=>{
+       this.navCtrl.setRoot('HomePage');
+     })
+      }, err => {
+      console.log(err);
+      });
+      
+  }
+
+  checkifFbUserNew(uid){
+
   }
 
 }

@@ -38,7 +38,15 @@ private userScoreRef = this.afDb.database.ref('/users/')
    console.log(this.currentUser.uid);
   //  return this.afDb.list('/users/'+this.currentUser.uid+'/score/');
   return this.afDb.database.ref('/users/'+this.currentUser.uid+'/score/').once("value", snapshotChanges =>{
+    if(snapshotChanges.exists()){
     this.userData= snapshotChanges.val();    
+     }
+     else{
+      let newScore= {level : 1, subLevel : 1, sublevelScore : 0, score : 0, stage:1};
+      this.userScoreRef.child(this.currentUser.uid)
+        .child('/score/')
+        .set(newScore);
+    }
    });
  }
 
@@ -52,7 +60,7 @@ private userScoreRef = this.afDb.database.ref('/users/')
  }
 
  createUserScore(uid){
-  let newScore= {level : 1, subLevel : 1, sublevelScore : 0, score : 0}
+  let newScore= {level : 1, subLevel : 1, sublevelScore : 0, score : 0, stage:1}
   return this.userScoreRef.child(uid)
    .child('/score/')
    .set(newScore);
@@ -66,6 +74,10 @@ private userScoreRef = this.afDb.database.ref('/users/')
  getAllQue(){
    console.log('hello');
   return this.afDb.database.ref('/questions').orderByChild('stage').startAt(this.userData.stage).limitToFirst(5).once('value');
+ }
+
+ checkIfuserExist(){
+   return this.afDb.database.ref('/users/');
  }
 
 }

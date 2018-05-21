@@ -38,6 +38,7 @@ export class MyApp {
         } else {
           this.rootPage = 'LoginPage';
         }
+        authState.unsubscribe();
       })
      
      
@@ -59,7 +60,7 @@ export class MyApp {
        });
        this.rootPage = 'HomePage';
      }else{
-       alert('no more questions');
+       this.rootPage = 'FinishPage';
      }},err =>{
        console.log(err);
      });
